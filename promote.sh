@@ -9,6 +9,13 @@ export LOCAL_BRANCH_NAME="changes-${CREATED_TIME,,}"
 
 echo "creating branch $LOCAL_BRANCH_NAME"
 
+# lets setup git
+jx step git credentials
+
+git config --global --add user.name JenkinsXBot
+git config --global --add user.email jenkins-x@googlegroups.com
+
+
 mkdir -p /tmp/docgen
 pushd /tmp/docgen
   export DOC_GEN_VERSION="0.0.2"
