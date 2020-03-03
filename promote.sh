@@ -4,8 +4,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-echo "generating random branch string"
-LOCAL_BRANCH_NAME=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+export CREATED_TIME=$(date '+%a-%b-%d-%Y-%H-%M-%S')
+export LOCAL_BRANCH_NAME="changes-${CREATED_TIME,,}"
 
 echo "creating branch $LOCAL_BRANCH_NAME"
 
