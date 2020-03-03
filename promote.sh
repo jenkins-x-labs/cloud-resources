@@ -4,6 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+echo "generating random branch string"
 LOCAL_BRANCH_NAME=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 echo "creating branch $LOCAL_BRANCH_NAME"
