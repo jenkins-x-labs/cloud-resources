@@ -59,8 +59,6 @@ export SLEEP="sleep 2"
 # CLI-DOC-GEN-START
 gcloud config set project $PROJECT_ID
 
-gcloud components update --no-user-output-enabled
-
 # enable secret manager
 gcloud services enable secretmanager.googleapis.com
 
