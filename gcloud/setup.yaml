@@ -19,14 +19,6 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: boot-sa
-  namespace: {namespace}
-  annotations:
-    iam.gke.io/gcp-service-account: {cluster_name}-jb@{project_id}.iam.gserviceaccount.com
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
   name: kaniko-sa
   namespace: {namespace}
   annotations:
