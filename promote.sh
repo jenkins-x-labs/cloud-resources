@@ -38,6 +38,7 @@ MESSAGE="chore: updated GCP cloud resources docs"
 pushd jx-docs/layouts/shortcodes
   /tmp/docgen/cli-doc-gen -f /tmp/cloud-resources/gcloud/create_cluster.sh -o gcp-create-cluster.html
   /tmp/docgen/cli-doc-gen -f /tmp/cloud-resources/gcloud/setup_resources.sh -o gcp-create-resources.html --trim-prefix="retry "
+  /tmp/docgen/cli-doc-gen -f /tmp/cloud-resources/kind/create_cluster.sh -o kind-create-cluster.html
 
   git add *
   git commit --allow-empty -a -m "$MESSAGE"
