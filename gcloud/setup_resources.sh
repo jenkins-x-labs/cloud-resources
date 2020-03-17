@@ -71,7 +71,17 @@ gcloud iam service-accounts create $CLUSTER_NAME-tk --display-name=$CLUSTER_NAME
 gcloud iam service-accounts create $CLUSTER_NAME-vo --display-name=$CLUSTER_NAME-vo --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-vt --display-name=$CLUSTER_NAME-vt --project $PROJECT_ID
 
+
 curl https://raw.githubusercontent.com/jenkins-x-labs/cloud-resources/master/gcloud/setup.yaml | sed "s/{namespace}/$NAMESPACE/" | sed "s/{project_id}/$PROJECT_ID/" | sed "s/{cluster_name}/$CLUSTER_NAME/" | kubectl apply -f -
+
+# change to the new jx namespace
+jx ns $NAMESPACE
+
+# lets create the kaniko key
+gcloud iam service-accounts keys create kaniko-secret.json --iam-account $CLUSTER_NAME-ko@$PROJECT_ID.iam.gserviceaccount.com --project $PROJECT_ID
+
+kubectl create secret generic kaniko-secret --from-file=kaniko-secret=kaniko-secret.json
+
 
 
 # external dns
@@ -216,5 +226,3 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --project $PROJECT_ID
 # CLI-DOC-GEN-END
 
-# change to the new jx namespace
-jx ns $NAMESPACE
