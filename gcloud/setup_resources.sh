@@ -175,6 +175,19 @@ retry gcloud iam service-accounts add-iam-policy-binding \
   $CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com \
   --project $PROJECT_ID
 
+retry gcloud iam service-accounts add-iam-policy-binding \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/bucketrepo-bucketrepo]" \
+  $CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com \
+  --project $PROJECT_ID
+
+retry gcloud iam service-accounts add-iam-policy-binding \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/jxboot-helmfile-resources-controllerbuild]" \
+  $CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com \
+  --project $PROJECT_ID
+
+
 retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role roles/storage.admin \
   --member "serviceAccount:$CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com" \
