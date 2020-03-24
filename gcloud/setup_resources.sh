@@ -100,7 +100,7 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
 # jx boot
 retry gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/boot-sa]" \
+  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/jxl-boot]" \
   $CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com \
   --project $PROJECT_ID
 
@@ -121,6 +121,16 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role roles/storage.admin \
+  --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
+
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/storage.objectAdmin \
+  --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
+
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/storage.objectCreator \
   --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
   --project $PROJECT_ID
 
