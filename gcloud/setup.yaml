@@ -11,10 +11,10 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: externaldns-sa
+  name: gsm-sa
   namespace: {namespace}
   annotations:
-    iam.gke.io/gcp-service-account: {cluster_name}-ex@{project_id}.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: {cluster_name}-sm@{project_id}.iam.gserviceaccount.com
 ---
 apiVersion: v1
 kind: ServiceAccount

@@ -66,6 +66,7 @@ gcloud services enable secretmanager.googleapis.com
 gcloud iam service-accounts create $CLUSTER_NAME-ex --display-name=$CLUSTER_NAME-ex --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-jb --display-name=$CLUSTER_NAME-jb --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-ko --display-name=$CLUSTER_NAME-ko --project $PROJECT_ID
+gcloud iam service-accounts create $CLUSTER_NAME-sm --display-name=$CLUSTER_NAME-sm --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-st --display-name=$CLUSTER_NAME-st --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-tk --display-name=$CLUSTER_NAME-tk --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-vo --display-name=$CLUSTER_NAME-vo --project $PROJECT_ID
@@ -87,7 +88,7 @@ kubectl create secret generic kaniko-secret --from-file=kaniko-secret=kaniko-sec
 # external dns
 retry gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/externaldns-sa]" \
+  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/external-dns]" \
   $CLUSTER_NAME-ex@$PROJECT_ID.iam.gserviceaccount.com \
   --project $PROJECT_ID
 
@@ -134,6 +135,11 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
   --project $PROJECT_ID
 
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/secretmanager.secretAccessor \
+  --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
+
 # kaniko
 retry gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
@@ -166,6 +172,17 @@ retry gcloud iam service-accounts add-iam-policy-binding \
 retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role roles/viewer \
   --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
+
+# secret manager
+retry gcloud iam service-accounts add-iam-policy-binding \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/gsm-sa]" \
+  $CLUSTER_NAME-sm@$PROJECT_ID.iam.gserviceaccount.com \
+  --project $PROJECT_ID
+
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/secretmanager.secretAccessor \
+  --member "serviceAccount:$CLUSTER_NAME-sm@$PROJECT_ID.iam.gserviceaccount.com" \
   --project $PROJECT_ID
 
 # storage
@@ -242,10 +259,5 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member "serviceAccount:$CLUSTER_NAME-vt@$PROJECT_ID.iam.gserviceaccount.com" \
   --project $PROJECT_ID
 
-# lets setup google secret manager
-retry gcloud projects add-iam-policy-binding $PROJECT_ID \
-  --role roles/secretmanager.secretAccessor \
-  --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
-  --project $PROJECT_ID
 # CLI-DOC-GEN-END
 
