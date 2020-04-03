@@ -35,14 +35,6 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: tekton-sa
-  namespace: {namespace}
-  annotations:
-    iam.gke.io/gcp-service-account: {cluster_name}-tk@{project_id}.iam.gserviceaccount.com
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
   name: vault-sa
   namespace: {namespace}
   annotations:
