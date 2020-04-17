@@ -65,7 +65,6 @@ gcloud services enable secretmanager.googleapis.com
 # setup the service accounts
 gcloud iam service-accounts create $CLUSTER_NAME-ex --display-name=$CLUSTER_NAME-ex --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-jb --display-name=$CLUSTER_NAME-jb --project $PROJECT_ID
-gcloud iam service-accounts create $CLUSTER_NAME-ko --display-name=$CLUSTER_NAME-ko --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-sm --display-name=$CLUSTER_NAME-sm --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-st --display-name=$CLUSTER_NAME-st --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-tk --display-name=$CLUSTER_NAME-tk --project $PROJECT_ID
@@ -172,6 +171,21 @@ retry gcloud iam service-accounts add-iam-policy-binding \
 retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role roles/viewer \
   --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
+
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/storage.admin \
+  --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
+
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/storage.objectAdmin \
+  --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
+
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/storage.objectCreator \
+  --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
 
 # secret manager
 retry gcloud iam service-accounts add-iam-policy-binding \
