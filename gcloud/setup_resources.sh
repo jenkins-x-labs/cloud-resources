@@ -77,13 +77,6 @@ curl https://raw.githubusercontent.com/jenkins-x-labs/cloud-resources/master/gcl
 # change to the new jx namespace
 jx ns $NAMESPACE
 
-# lets create the kaniko key
-gcloud iam service-accounts keys create kaniko-secret.json --iam-account $CLUSTER_NAME-ko@$PROJECT_ID.iam.gserviceaccount.com --project $PROJECT_ID
-
-kubectl create secret generic kaniko-secret --from-file=kaniko-secret=kaniko-secret.json
-
-
-
 # external dns
 retry gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
