@@ -139,28 +139,6 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member "serviceAccount:$CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com" \
   --project $PROJECT_ID
 
-# kaniko
-retry gcloud iam service-accounts add-iam-policy-binding \
-  --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/kaniko-sa]" \
-  $CLUSTER_NAME-ko@$PROJECT_ID.iam.gserviceaccount.com \
-  --project $PROJECT_ID
-
-retry gcloud projects add-iam-policy-binding $PROJECT_ID \
-  --role roles/storage.admin \
-  --member "serviceAccount:$CLUSTER_NAME-ko@$PROJECT_ID.iam.gserviceaccount.com" \
-  --project $PROJECT_ID
-
-retry gcloud projects add-iam-policy-binding $PROJECT_ID \
-  --role roles/storage.objectAdmin \
-  --member "serviceAccount:$CLUSTER_NAME-ko@$PROJECT_ID.iam.gserviceaccount.com" \
-  --project $PROJECT_ID
-
-retry gcloud projects add-iam-policy-binding $PROJECT_ID \
-  --role roles/storage.objectCreator \
-  --member "serviceAccount:$CLUSTER_NAME-ko@$PROJECT_ID.iam.gserviceaccount.com" \
-  --project $PROJECT_ID
-
 # tekton
 retry gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
