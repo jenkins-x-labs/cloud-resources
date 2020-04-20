@@ -19,6 +19,7 @@ jx step create pr regex \
     --regex 'version: (.*)' \
     --version ${VERSION} \
     --files git/github.com/jenkins-x-labs/cloud-resources.yml \
+    --labels=updatebot \
     --repo https://github.com/jenkins-x/jxr-versions.git    
 
 mkdir -p /tmp/docgen
