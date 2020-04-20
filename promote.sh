@@ -15,6 +15,11 @@ jx step git credentials
 git config --global --add user.name JenkinsXBot
 git config --global --add user.email jenkins-x@googlegroups.com
 
+jx step create pr regex \
+    --regex 'version: (.*)' \
+    --version ${VERSION} \
+    --files git/github.com/jenkins-x-labs/cloud-resources.yml \
+    --repo https://github.com/jenkins-x/jxr-versions.git    
 
 mkdir -p /tmp/docgen
 pushd /tmp/docgen
