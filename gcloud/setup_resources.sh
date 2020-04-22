@@ -158,6 +158,11 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
   --project $PROJECT_ID
 
+retry gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --role roles/secretmanager.secretAccessor \
+  --member "serviceAccount:$CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com" \
+  --project $PROJECT_ID
+
 # secret manager
 retry gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
