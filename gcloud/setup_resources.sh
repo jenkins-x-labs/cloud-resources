@@ -78,7 +78,7 @@ curl https://raw.githubusercontent.com/jenkins-x-labs/cloud-resources/master/gcl
 jx ns $NAMESPACE
 
 # external dns
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/external-dns]" \
   $CLUSTER_NAME-ex@$PROJECT_ID.iam.gserviceaccount.com \
@@ -91,7 +91,7 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 
 # jx boot
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/jxl-boot]" \
   $CLUSTER_NAME-jb@$PROJECT_ID.iam.gserviceaccount.com \
@@ -133,7 +133,7 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --project $PROJECT_ID
 
 # tekton
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/tekton-bot]" \
   $CLUSTER_NAME-tk@$PROJECT_ID.iam.gserviceaccount.com \
@@ -164,7 +164,7 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --project $PROJECT_ID
 
 # secret manager
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/gsm-sa]" \
   $CLUSTER_NAME-sm@$PROJECT_ID.iam.gserviceaccount.com \
@@ -176,19 +176,19 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --project $PROJECT_ID
 
 # storage
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/storage-sa]" \
   $CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com \
   --project $PROJECT_ID
 
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/bucketrepo-bucketrepo]" \
   $CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com \
   --project $PROJECT_ID
 
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/jxboot-helmfile-resources-controllerbuild]" \
   $CLUSTER_NAME-st@$PROJECT_ID.iam.gserviceaccount.com \
@@ -206,7 +206,7 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --project $PROJECT_ID
 
 # velero
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/velero-sa]" \
   $CLUSTER_NAME-vo@$PROJECT_ID.iam.gserviceaccount.com \
@@ -228,7 +228,7 @@ retry gcloud projects add-iam-policy-binding $PROJECT_ID \
   --project $PROJECT_ID
 
 # vault
-retry gcloud iam service-accounts add-iam-policy-binding \
+retry gcloud iam service-accounts add-iam-policy-binding --quiet \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/vault-sa]" \
   $CLUSTER_NAME-vt@$PROJECT_ID.iam.gserviceaccount.com \
