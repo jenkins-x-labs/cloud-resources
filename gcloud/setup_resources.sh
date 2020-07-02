@@ -75,7 +75,9 @@ gcloud iam service-accounts create $CLUSTER_NAME-vt --display-name=$CLUSTER_NAME
 curl https://raw.githubusercontent.com/jenkins-x-labs/cloud-resources/master/gcloud/setup.yaml | sed "s/{namespace}/$NAMESPACE/" | sed "s/{project_id}/$PROJECT_ID/" | sed "s/{cluster_name}/$CLUSTER_NAME/" | kubectl apply -f -
 
 # change to the new jx namespace
-jx ns $NAMESPACE
+#jx ns $NAMESPACE
+kubectl config set-context --current --namespace=$NAMESPACE
+
 
 # external dns
 retry gcloud iam service-accounts add-iam-policy-binding --quiet \
