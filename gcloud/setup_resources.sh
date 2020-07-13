@@ -71,11 +71,12 @@ gcloud iam service-accounts create $CLUSTER_NAME-tk --display-name=$CLUSTER_NAME
 gcloud iam service-accounts create $CLUSTER_NAME-vo --display-name=$CLUSTER_NAME-vo --project $PROJECT_ID
 gcloud iam service-accounts create $CLUSTER_NAME-vt --display-name=$CLUSTER_NAME-vt --project $PROJECT_ID
 
+echo "creating namespace $NAMESPACE for project $PROJECT_ID"
 
-curl https://raw.githubusercontent.com/jenkins-x-labs/cloud-resources/master/gcloud/setup.yaml | sed "s/{namespace}/$NAMESPACE/" | sed "s/{project_id}/$PROJECT_ID/" | sed "s/{cluster_name}/$CLUSTER_NAME/" | kubectl apply -f -
+curl https://raw.githubusercontent.com/jenkins-x-labs/cloud-resources/master/gcloud/setup.yaml | sed "s/{namespace}/$NAMESPACE/" | sed "s/{project_id}/$PROJECT_ID/" | sed "s/{cluster_name}/$CLUSTER_NAME/" | kubectl apply --validate=false -f -
 
 # change to the new jx namespace
-#jx ns $NAMESPACE
+jx ns $NAMESPACE
 kubectl config set-context --current --namespace=$NAMESPACE
 
 
